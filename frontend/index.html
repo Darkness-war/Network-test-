@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedTest Pro | Internet Speed Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-tachometer-alt"></i>
+                <h1>SpeedTest<span class="logo-highlight">Pro</span></h1>
+            </div>
+            <nav class="nav">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-server"></i> Servers</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Results</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <button class="btn-dark-mode" id="darkModeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Test Interface -->
+        <main class="main-content">
+            <div class="test-container">
+                <div class="server-selection">
+                    <div class="server-current">
+                        <i class="fas fa-server"></i>
+                        <div class="server-info">
+                            <span class="server-label">Server</span>
+                            <span class="server-name" id="currentServer">Auto (Recommended)</span>
+                        </div>
+                        <button class="btn-change-server" id="changeServerBtn">
+                            <i class="fas fa-exchange-alt"></i> Change
+                        </button>
+                    </div>
+                    <div class="server-stats">
+                        <div class="stat">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="serverLocation">Detecting...</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-network-wired"></i>
+                            <span id="serverDistance">- km</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span id="serverPing">- ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speed Gauges -->
+                <div class="gauges-container">
+                    <!-- Ping Gauge -->
+                    <div class="gauge-card">
+                        <div class="gauge-header">
+                            <i class="fas fa-signal"></i>
+                            <h3>PING</h3>
+                        </div>
+                        <div class="gauge-wrapper">
+                            <div class="gauge" id="pingGauge">
+                                <div class="gauge-value">0</div>
+                                <div class="gauge-unit">ms</div>
+                            </div>
+                            <div class="gauge-label">Latency</div>
+                        </div>
+                        <div class="gauge-status" id="pingStatus">Ready</div>
+                    </div>
+
+                    <!-- Download Gauge -->
+                    <div class="gauge-card">
+                        <div class="gauge-header">
+                            <i class="fas fa-download"></i>
+                            <h3>DOWNLOAD</h3>
+                        </div>
+                        <div class="gauge-wrapper">
+                            <div class="gauge" id="downloadGauge">
+                                <div class="gauge-value">0</div>
+                                <div class="gauge-unit">Mbps</div>
+                            </div>
+                            <div class="gauge-label">Speed</div>
+                        </div>
+                        <div class="gauge-status" id="downloadStatus">Ready</div>
+                    </div>
+
+                    <!-- Upload Gauge -->
+                    <div class="gauge-card">
+                        <div class="gauge-header">
+                            <i class="fas fa-upload"></i>
+                            <h3>UPLOAD</h3>
+                        </div>
+                        <div class="gauge-wrapper">
+                            <div class="gauge" id="uploadGauge">
+                                <div class="gauge-value">0</div>
+                                <div class="gauge-unit">Mbps</div>
+                            </div>
+                            <div class="gauge-label">Speed</div>
+                        </div>
+                        <div class="gauge-status" id="uploadStatus">Ready</div>
+                    </div>
+                </div>
+
+                <!-- Control Center -->
+                <div class="control-center">
+                    <button class="btn-start-test" id="startTestBtn">
+                        <i class="fas fa-play"></i>
+                        <span>Start Speed Test</span>
+                    </button>
+                    
+                    <div class="test-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="testProgress"></div>
+                        </div>
+                        <div class="progress-label">
+                            <span id="testPhase">Ready to test</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="test-actions">
+                        <button class="btn-action" id="shareResultsBtn">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="btn-action" id="historyBtn">
+                            <i class="fas fa-history"></i> History
+                        </button>
+                        <button class="btn-action" id="settingsBtn">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Test Details -->
+                <div class="test-details">
+                    <div class="detail-card">
+                        <h4><i class="fas fa-info-circle"></i> Test Information</h4>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">IP Address:</span>
+                                <span class="detail-value" id="userIp">Detecting...</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">ISP:</span>
+                                <span class="detail-value" id="userIsp">Detecting...</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Test ID:</span>
+                                <span class="detail-value" id="testId">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Timestamp:</span>
+                                <span class="detail-value" id="testTimestamp">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <h4><i class="fas fa-chart-bar"></i> Performance Metrics</h4>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <div class="metric-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="metric-info">
+                                    <span class="metric-label">Jitter</span>
+                                    <span class="metric-value" id="jitterValue">0 ms</span>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="metric-info">
+                                    <span class="metric-label">Packet Loss</span>
+                                    <span class="metric-value" id="packetLossValue">0%</span>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="metric-info">
+                                    <span class="metric-label">Signal Quality</span>
+                                    <span class="metric-value" id="signalQuality">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Server Selection Modal -->
+            <div class="modal" id="serverModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-server"></i> Select Test Server</h2>
+                        <button class="btn-close-modal" id="closeServerModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="server-search">
+                            <input type="text" id="serverSearch" placeholder="Search servers by location or name...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="server-list" id="serverList">
+                            <!-- Servers will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>SpeedTest Pro</h4>
+                    <p>Professional-grade internet speed testing platform</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology</h4>
+                    <a href="#">API Documentation</a>
+                    <a href="#">Server Hosting</a>
+                    <a href="#">Contribute</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SpeedTest Pro. All rights reserved. v1.0.0</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
